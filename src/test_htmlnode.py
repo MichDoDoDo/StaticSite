@@ -1,5 +1,5 @@
 import unittest
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestHtmlNode(unittest.TestCase):
     def test_htmlnode_props(self):
@@ -31,3 +31,15 @@ class TestLeafNode(unittest.TestCase):
         dicttest = {"href": "https://www.youtube.com"}
         node = LeafNode("a", "Click me!", dicttest).to_html()
         self.assertEqual(node,"<a href=\"https://www.youtube.com\">Click me!</a>")
+        
+class TestParentNode(unittest.TestCase):
+    def test_to_html(self):
+        node = ParentNode("p",
+    [
+        LeafNode("b", "Bold text"),
+        LeafNode(None, "Normal text"),
+        LeafNode("i", "italic text"),
+        LeafNode(None, "Normal text"),
+    ],)
+        result = node.to_html()
+        self.assertEqual(result,"<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>")
